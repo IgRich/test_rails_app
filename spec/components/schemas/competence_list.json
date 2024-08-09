@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/competence_entity"
+      }
+    },
+    "count": {
+      "type": "integer"
+    }
+  }
+}

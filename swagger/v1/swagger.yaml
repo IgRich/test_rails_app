@@ -1,0 +1,449 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/authors":
+    get:
+      summary: retrieves list
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: authors retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/author_list"
+    post:
+      summary: creates a author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '201':
+          description: author created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/author_entity"
+        '422':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+  "/authors/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: retrieves author
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: author retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/author_entity"
+        '404':
+          description: author not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    delete:
+      summary: delete author
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: author replaces for courses
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/author_entity"
+        '422':
+          description: new author not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_entity"
+        '404':
+          description: author not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    put:
+      summary: updates author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '200':
+          description: author updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/author_entity"
+        '422':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - title
+  "/competences":
+    get:
+      summary: retrieves list
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competences retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/competence_list"
+    post:
+      summary: creates a competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '201':
+          description: competences created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/competence_entity"
+        '422':
+          description: competences already exists
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  required: true
+  "/competences/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: retrieves competence
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competence retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/competence_entity"
+        '404':
+          description: competence not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    delete:
+      summary: delete competence
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competence removed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/competence_entity"
+        '422':
+          description: competence have relations
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+        '404':
+          description: competence not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    put:
+      summary: updates competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '200':
+          description: competence updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/competence_entity"
+        '422':
+          description: competences already exists
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+        '404':
+          description: competence not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_404"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  required: true
+  "/courses":
+    get:
+      summary: retrieves list
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: courses retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/course_list"
+    post:
+      summary: creates a course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '201':
+          description: course created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/course_entity"
+        '422':
+          description: competence not exists
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_entity"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  required: true
+                author_id:
+                  type: integer
+                  required: true
+                competences_ids:
+                  type: array
+                  items:
+                    type: integer
+                  required: true
+  "/courses/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: retrieves course
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: course retrieves
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/course_entity"
+        '404':
+          description: course not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    delete:
+      summary: delete course
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: course removed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/course_entity"
+        '404':
+          description: course not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_404"
+    put:
+      summary: updates course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '200':
+          description: course updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/course_entity"
+        '404':
+          description: course not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#components/schemas/error_404"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author_id:
+                  type: integer
+                competences_ids:
+                  type: array
+                  items:
+                    type: integer
+servers:
+- url: https://localhost:3000
+components:
+  schemas:
+    author_entity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Author ID
+          required: true
+        name:
+          type: string
+          description: Author full name
+          required: true
+    author_list:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            "$ref": "#/components/schemas/author_entity"
+        count:
+          type: integer
+    competence_entity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Competence ID
+          required: true
+        title:
+          type: string
+          description: Competence title
+          required: true
+    competence_list:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            "$ref": "#/components/schemas/competence_entity"
+        count:
+          type: integer
+    course_entity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Course ID
+          required: true
+        title:
+          type: string
+          description: Course title
+          required: true
+        author:
+          "$ref": "#/components/schemas/author_entity"
+        competences:
+          type: array
+          items:
+            "$ref": "#/components/schemas/competence_entity"
+    course_list:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            "$ref": "#/components/schemas/course_entity"
+        count:
+          type: integer
+    error_404:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - ENTITY_NOT_FOUND
+    error_entity:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNPROCESSABLE_ENTITY_ERROR
+          - NEW_AUTHOR_NOT_FOUND
+          - COMPETENCE_HAVE_COURSE
+        errors:
+          type: object
+          description: Contain hash of errors

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "enum": [
+        "UNPROCESSABLE_ENTITY_ERROR",
+        "NEW_AUTHOR_NOT_FOUND",
+        "COMPETENCE_HAVE_COURSE"
+      ]
+    },
+    "errors": {
+      "type": "object",
+      "description": "Contain hash of errors"
+    }
+  }
+}

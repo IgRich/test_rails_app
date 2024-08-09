@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Competence ID",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Competence title",
+      "required": true
+    }
+  }
+}

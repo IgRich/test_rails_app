@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Course ID",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Course title",
+      "required": true
+    },
+    "author": {
+      "$ref": "#/components/schemas/author_entity"
+    },
+    "competences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/competence_entity"
+      }
+    }
+  }
+}
