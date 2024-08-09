@@ -5,7 +5,19 @@
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 # Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+
+competences = (1..30).map do |number|
+  Competence.create!(title: "Competence in #{Faker::ProgrammingLanguage.name} ##{number}")
+end
+
+100.times do
+  author = Author.create!(name: Faker::Name.name)
+  author.courses.create!(
+    title: "course #{Faker::ProgrammingLanguage.name}",
+    competences: [competences.sample, competences.sample].uniq
+  )
+  author.courses.create!(
+    title: "course #{Faker::ProgrammingLanguage.name}",
+    competences: [competences.sample, competences.sample].uniq
+  )
+end
