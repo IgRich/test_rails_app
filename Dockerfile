@@ -17,6 +17,8 @@ ENV RAILS_ENV="development" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
+RUN mkdir storage
+
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
@@ -56,4 +58,4 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["./bin/rails", "server", "-p", "3000", "-b", "0.0.0.0"]
