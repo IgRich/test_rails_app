@@ -18,3 +18,6 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/LetSetup:
   Enabled: false
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: false

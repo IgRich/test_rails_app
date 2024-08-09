@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/authors' do
@@ -92,14 +94,14 @@ RSpec.describe 'api/authors' do
 
       response '200', 'author replaces for courses' do
         schema '$ref' => '#/components/schemas/author_entity'
-        let!(:author_1) { create(:author) }
-        let!(:author_2) { create(:author) }
-        let!(:course) { create(:course, author: author_1) }
-        let(:id) { author_1.id }
+        let!(:author1) { create(:author) }
+        let!(:author2) { create(:author) }
+        let!(:course) { create(:course, author: author1) }
+        let(:id) { author1.id }
 
         run_test! do
-          expect(json_body).to include(author_1.slice(:id, :name))
-          expect(course.reload.author).to eq(author_2)
+          expect(json_body).to include(author1.slice(:id, :name))
+          expect(course.reload.author).to eq(author2)
         end
       end
 

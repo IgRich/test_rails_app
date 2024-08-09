@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompetencesController < ApplicationController
   def index
     render json: format_entities(CompetenceEntity, repository.list), status: :ok

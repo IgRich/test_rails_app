@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseEntity
   attr_reader :model
 

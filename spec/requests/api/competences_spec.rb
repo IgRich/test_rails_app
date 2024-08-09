@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/competences' do
@@ -147,10 +149,10 @@ RSpec.describe 'api/competences' do
 
       response '422', 'competences already exists' do
         schema '$ref' => '#components/schemas/error_entity'
-        let!(:competence_1) { create(:competence) }
-        let!(:competence_2) { create(:competence) }
-        let(:params) { { title: competence_2.title } }
-        let(:id) { competence_2.id }
+        let!(:competence1) { create(:competence) }
+        let!(:competence2) { create(:competence) }
+        let(:params) { { title: competence2.title } }
+        let(:id) { competence2.id }
 
         run_test! do
           expect(json_body[:errors]).to include(title: ['already exists'])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseEntity < BaseEntity
   def format
     result = model.slice(:id, :title)

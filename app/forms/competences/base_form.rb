@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Competences
   class BaseForm < ApplicationForm
     register_macro(:competences_uniq?) do

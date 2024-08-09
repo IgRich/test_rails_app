@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   UnknownEntityFormat = Class.new(StandardError)
   UnprocessableEntityError = Class.new(StandardError) do
@@ -9,7 +11,7 @@ class ApplicationController < ActionController::API
     end
   end
 
-  rescue_from BaseRepository::EntityNotFound, with: :error_404
+  rescue_from BaseRepository::EntityNotFound, with: :error404
   rescue_from UnprocessableEntityError, AuthorsRepository::NewAuthorNotFound,
               CompetencesRepository::CompetenceHaveCourse, with: :error_handler
 
@@ -27,7 +29,7 @@ class ApplicationController < ActionController::API
 
   private
 
-  def error_404(error)
+  def error404(error)
     error_code = error.class.name.demodulize.underscore.upcase
     render json: { code: error_code }, status: :not_found
   end
@@ -43,7 +45,7 @@ class ApplicationController < ActionController::API
 
     validation_result = form.new.call(key.nil? ? params : params[key])
 
-    raise UnprocessableEntityError.new(validation_result.errors.to_h) unless validation_result.success?
+    raise UnprocessableEntityError, validation_result.errors.to_h unless validation_result.success?
 
     validation_result.to_h
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthorsController < ApplicationController
   def index
     render json: format_entities(AuthorEntity, repository.list), status: :ok

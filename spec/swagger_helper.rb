@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+SCHEMAS_PATH = Rails.root.join('spec/components/schemas/').to_s
+
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
@@ -11,16 +13,18 @@ RSpec.configure do |config|
   config.openapi_strict_schema_validation = true
 
   # Dynamic load schemas from #spec/components/schemas directory
+  def load_schema(file)
+    schema_path = file.sub(SCHEMAS_PATH, '').split('/')
+    schema_path[-1] = schema_path[-1].sub('.json', '')
+    schema_path << JSON.parse(File.read(file))
+    schema_path[0..-2].reverse.reduce(schema_path[-1]) { |b, a| { a => b } }.deep_symbolize_keys
+  end
+
   def load_schemas
-    schemas_path = Rails.root.join('spec/components/schemas/').to_s
-    schemas_files = Dir.glob("#{schemas_path}**/*")
+    schemas_files = Dir.glob("#{SCHEMAS_PATH}**/*")
     schemas_files = schemas_files.select { File.file?(_1) }
     schemas_files.reduce({}) do |acc, file|
-      schema_path = file.sub(schemas_path, '').split('/')
-      schema_path[-1] = schema_path[-1].sub('.json', '')
-      schema_path << JSON.parse(File.read(file))
-      schema = schema_path[0..-2].reverse.reduce(schema_path[-1]) { |b, a| { a => b } }.deep_symbolize_keys
-      acc.deep_merge!(schema)
+      acc.deep_merge!(load_schema(file))
     end
   end
 

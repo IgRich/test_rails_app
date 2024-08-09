@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Competences
   class UpdateForm < BaseForm
     params do

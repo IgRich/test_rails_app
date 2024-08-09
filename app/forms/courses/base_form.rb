@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Courses
   class BaseForm < ApplicationForm
     register_macro(:author_exists?) do

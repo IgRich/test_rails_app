@@ -108,15 +108,15 @@ RSpec.describe 'api/courses' do
       response '200', 'course removed' do
         schema '$ref' => '#/components/schemas/course_entity'
         let(:competence) { create(:competence) }
-        let(:course_1) { create(:course, competences: [competence]) }
-        let(:course_2) { create(:course, competences: [competence]) }
-        let(:id) { course_1.id }
+        let(:course1) { create(:course, competences: [competence]) }
+        let(:course2) { create(:course, competences: [competence]) }
+        let(:id) { course1.id }
 
         run_test! do
-          expect(json_body).to include(course_1.slice(:id, :title))
+          expect(json_body).to include(course1.slice(:id, :title))
           expect(Course.find_by(id:)).to be_nil
           expect(CourseCompetence.where(course_id: id)).to be_empty
-          expect(CourseCompetence.where(course_id: course_2.id).count).to eq(1)
+          expect(CourseCompetence.where(course_id: course2.id).count).to eq(1)
         end
       end
 
